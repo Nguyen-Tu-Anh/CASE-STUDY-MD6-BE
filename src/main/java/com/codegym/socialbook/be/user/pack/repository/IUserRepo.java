@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IUserRepo extends JpaRepository<Users, Long> {
-
     @Query("select u from Users u where u.role.id = 2 and u.status=2 order by u.startDate desc")
     Page<Users> find12lProvidersSortByStartDate(Pageable page);
 

@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -74,6 +73,9 @@ public class Users {
 
 
     // Có 3 roles : Customer,Admin và nhà cung cấp dịch vụ (NCCDV)
+    // 1.ADMIN
+    // 2.SP
+    // 3.USER
     @OneToOne
     private Role role;
 
@@ -88,6 +90,10 @@ public class Users {
     //Danh gia cua khach hang
     @ManyToMany
     private Set<Review> reviews;
+
+    @OneToMany
+    private Set<Orders> orders;
+
 
     public Users() {
     }
@@ -119,8 +125,7 @@ public class Users {
     }
 
 
-
-    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, Set<String> images, Role role, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews) {
+    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, Set<String> images, Role role, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, Set<Orders> orders) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -147,6 +152,15 @@ public class Users {
         this.price = price;
         this.serviceOfProviders = serviceOfProviders;
         this.reviews = reviews;
+        this.orders = orders;
+    }
+
+    public Set<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
     }
 
     public Long getId() {

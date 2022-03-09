@@ -7,19 +7,14 @@ import java.sql.Date;
 
 @Entity
 @Data
-public class Order {
+@Table(name="orders")
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private double priceOfHour;
     private Date dateOfOrder;
     private double hoursOfService;
-    private double totalPrice;
     private int status;
-
-    @ManyToOne
-    private Users provider;
-
-    @ManyToOne
-    private Users customer;
+    private long customerId;
 }

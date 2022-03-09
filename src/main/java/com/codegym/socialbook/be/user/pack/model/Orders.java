@@ -11,7 +11,7 @@ import java.sql.Date;
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private double priceOfHour;
     private Date dateOfOrder;
     private double hoursOfService;

@@ -8,9 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRpo extends JpaRepository<Users,Long> {
-
-    @Query("select u from Users u where u.role.id = 2 order by u.startDate desc")
+public interface IUserRepo extends JpaRepository<Users, Long> {
+    @Query("select u from Users u where u.role.id = 2 and u.status=2 order by u.startDate desc")
     Page<Users> find12lProvidersSortByStartDate(Pageable page);
 
 }

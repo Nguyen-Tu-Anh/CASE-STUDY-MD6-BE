@@ -14,7 +14,6 @@ public class Order {
     private double priceOfHour;
     private Date dateOfOrder;
     private double hoursOfService;
-    private double totalPrice;
     private int status;
 
     @ManyToOne

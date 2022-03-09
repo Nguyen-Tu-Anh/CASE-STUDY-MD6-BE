@@ -49,12 +49,4 @@ public class UserController {
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
-
-    //Tìm kiếm list đơn được đặt
-    @GetMapping("/rented-orders/{page}")
-    public ResponseEntity<Page<Orders>> findAllRentOrders(@PathVariable int page){
-        return new ResponseEntity(orderService.findAllRentOrders(PageRequest.of(page,12)),HttpStatus.OK);
-    }
-
-
 }

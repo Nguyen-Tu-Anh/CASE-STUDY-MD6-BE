@@ -16,4 +16,19 @@ public class OrderService implements IOrderService{
     public Page<Orders> findAllRentOrders(Pageable page) {
         return orderRepo.findAllRentOrders(page);
     }
+
+    @Override
+    public void save(Orders order) {
+        orderRepo.save(order);
+    }
+
+    @Override
+    public void delete(Long id) {
+        orderRepo.deleteById(id);
+    }
+
+    @Override
+    public Orders findById(Long id) {
+        return orderRepo.findById(id).get();
+    }
 }

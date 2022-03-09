@@ -98,6 +98,7 @@ public class Users {
     public Users() {
     }
 
+
     public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles) {
         this.id = id;
         this.name = name;
@@ -108,14 +109,30 @@ public class Users {
         this.roles = roles;
     }
 
-    public Users(   @NotBlank
+    public Users(Long id,String name, String avatar, String gender, String dateOfBirth, String city, String nationality, String description, String requirement, Date startDate, String facebookUrl, Long countOfDate, Set<String> images) {
+        this.id = id;
+        this.name = name;
+        this.avatar = avatar;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.city = city;
+        this.nationality = nationality;
+        this.description = description;
+        this.requirement = requirement;
+        this.startDate = startDate;
+        this.facebookUrl = facebookUrl;
+        this.countOfDate = countOfDate;
+        this.images = images;
+    }
+
+    public Users(@NotBlank
                     @Size(min = 3, max = 50) String name,
-                    @NotBlank
+                 @NotBlank
                     @Size(min = 3,max = 50) String username,
-                    @Size(max = 50)
+                 @Size(max = 50)
                     @Email String email,
-                    String avatar,
-                    @NotBlank
+                 String avatar,
+                 @NotBlank
                     @Size(min = 6,max = 100)String encode) {
         this.name = name;
         this.username = username;

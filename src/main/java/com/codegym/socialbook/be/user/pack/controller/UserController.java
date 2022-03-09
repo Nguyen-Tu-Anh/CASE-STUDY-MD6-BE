@@ -17,8 +17,23 @@ public class UserController {
     @Autowired
     IUserService userService;
 
-    @GetMapping
+    //lấy ra list 12 người cung cấp dịch vụ
+    @GetMapping("/hot/providers")
     public ResponseEntity<Page<Users>> find12lProvidersSortByStartDate(){
         return new ResponseEntity(userService.find12ProvidersSortByStartDate(PageRequest.of(0,12)), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Users> findById(@PathVariable Long id){
+        return new ResponseEntity(userService.findById(id),HttpStatus.OK);
+    }
+
+    //Chuyển trạng thái
+    @PutMapping("/change/{id}")
+    public ResponseEntity changeStatusToOffline(@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.setStatus(2);
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

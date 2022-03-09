@@ -29,11 +29,18 @@ public class UserController {
     }
 
     //Chuyển trạng thái
-    @PutMapping("/change/{id}")
+    @PutMapping("/provider/change/{id}")
     public ResponseEntity changeStatusToOffline(@PathVariable Long id){
         Users user = userService.findById(id);
         user.setStatus(2);
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @PutMapping()
+    public ResponseEntity changePrice(@RequestBody Users user){
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }

@@ -7,7 +7,8 @@ import java.sql.Date;
 
 @Entity
 @Data
-public class Order {
+@Table(name="orders")
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,10 +16,5 @@ public class Order {
     private Date dateOfOrder;
     private double hoursOfService;
     private int status;
-
-    @ManyToOne
-    private Users provider;
-
-    @ManyToOne
-    private Users customer;
+    private long customerId;
 }

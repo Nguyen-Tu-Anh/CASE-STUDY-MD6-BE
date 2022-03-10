@@ -22,7 +22,7 @@ public class OrderController {
 
     //Tìm kiếm list đơn được đặt
     @GetMapping("/{id}/provider/{page}")
-    public ResponseEntity<Page<Orders>> findAllRentOrders(@PathVariable int page,@PathVariable Long id){
+    public ResponseEntity<Page<Orders>> findAllRentOrdersForProvider(@PathVariable int page,@PathVariable Long id){
         return new ResponseEntity(orderService.findAllRentOrdersForProvider(PageRequest.of(page,12),id), HttpStatus.OK);
     }
 
@@ -55,6 +55,9 @@ public class OrderController {
         return new ResponseEntity(order,HttpStatus.OK);
     }
 
-    //Danh sách đơn đã thuê
-
+    //Danh sách đơn của khách
+    @GetMapping("/{id}/customer/{page}")
+    public ResponseEntity<Page<Orders>> findAllRentedOrdersForCustomer(@PathVariable long id,@PathVariable int page){
+        return new ResponseEntity(orderService.findAllRentedOrdersForCustomer(PageRequest.of(page,12),id),HttpStatus.OK);
+    }
 }

@@ -76,8 +76,8 @@ public class Users {
     // 1.ADMIN
     // 2.SP
     // 3.USER
-    @OneToOne
-    private Role role;
+//    @OneToOne
+//    private Role role;
 
     //Nhung thuoc tinh ben duoi la cua ben cung cap dich vu
     //ko bat buoc nhap luc dang ky la customer
@@ -148,7 +148,6 @@ public class Users {
         this.countOfDate = countOfDate;
         this.identify = identify;
         this.images = images;
-        this.role = role;
         this.price = price;
         this.serviceOfProviders = serviceOfProviders;
         this.reviews = reviews;
@@ -339,13 +338,6 @@ public class Users {
         this.identify = identify;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 
     public double getPrice() {
         return price;

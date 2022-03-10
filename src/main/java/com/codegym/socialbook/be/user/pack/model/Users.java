@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -88,6 +89,9 @@ public class Users {
     @ManyToMany
     private Set<Review> reviews;
 
+    @ElementCollection
+    private List<String> images;
+
 
     public Users() {
     }
@@ -119,7 +123,7 @@ public class Users {
     }
 
 
-    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews) {
+    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, List<String> images) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -144,8 +148,8 @@ public class Users {
         this.price = price;
         this.serviceOfProviders = serviceOfProviders;
         this.reviews = reviews;
+        this.images = images;
     }
-
 
     public Long getId() {
         return id;
@@ -157,6 +161,14 @@ public class Users {
 
     public String getName() {
         return name;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public void setName(String name) {

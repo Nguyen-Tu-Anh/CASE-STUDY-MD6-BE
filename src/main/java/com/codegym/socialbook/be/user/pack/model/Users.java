@@ -68,9 +68,6 @@ public class Users {
     private String identify;
 
     //list ảnh của user
-    @ElementCollection
-    private Set<String> images;
-
 
     // Có 3 roles : Customer,Admin và nhà cung cấp dịch vụ (NCCDV)
     // 1.ADMIN
@@ -90,9 +87,6 @@ public class Users {
     //Danh gia cua khach hang
     @ManyToMany
     private Set<Review> reviews;
-
-    @OneToMany
-    private Set<Orders> orders;
 
 
     public Users() {
@@ -125,7 +119,7 @@ public class Users {
     }
 
 
-    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, Set<String> images, Role role, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, Set<Orders> orders) {
+    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -147,20 +141,11 @@ public class Users {
         this.facebookUrl = facebookUrl;
         this.countOfDate = countOfDate;
         this.identify = identify;
-        this.images = images;
         this.price = price;
         this.serviceOfProviders = serviceOfProviders;
         this.reviews = reviews;
-        this.orders = orders;
     }
 
-    public Set<Orders> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Orders> orders) {
-        this.orders = orders;
-    }
 
     public Long getId() {
         return id;
@@ -218,13 +203,6 @@ public class Users {
         this.roles = roles;
     }
 
-    public Set<String> getImages() {
-        return images;
-    }
-
-    public void setImages(Set<String> images) {
-        this.images = images;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IOrderRepo extends JpaRepository<Orders, Long> {
-    @Query("select o from Orders o where o.status = 1 order by o.dateOfOrder desc ")
-    Page<Orders> findAllRentOrders(Pageable page);
+    @Query("select o from Orders o where o.providerId =?1 order by o.dateOfOrder desc ")
+    Page<Orders> findAllRentOrdersForProvider(Pageable page,Long id);
+
+    @Query("select o from Orders o where o.customerId = ?1 order by o.dateOfOrder desc")
+    Page<Orders> findAllRentedOrdersForCustomer(Pageable page, Long id);
 }

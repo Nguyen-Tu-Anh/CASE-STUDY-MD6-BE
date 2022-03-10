@@ -1,7 +1,6 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
 import com.codegym.socialbook.be.user.pack.model.Orders;
-import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.service.IOrderService;
 import com.codegym.socialbook.be.user.pack.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,9 @@ public class OrderController {
     IUserService userService;
 
     //Tìm kiếm list đơn được đặt
-    @GetMapping("/rented-orders/{page}")
-    public ResponseEntity<Page<Orders>> findAllRentOrders(@PathVariable int page){
-        return new ResponseEntity(orderService.findAllRentOrders(PageRequest.of(page,12)), HttpStatus.OK);
+    @GetMapping("/{id}/provider/{page}")
+    public ResponseEntity<Page<Orders>> findAllRentOrdersForProvider(@PathVariable int page,@PathVariable Long id){
+        return new ResponseEntity(orderService.findAllRentOrdersForProvider(PageRequest.of(page,12),id), HttpStatus.OK);
     }
 
     //Xem chi tiết đơn
@@ -39,24 +38,26 @@ public class OrderController {
         Orders order = orderService.findById(id);
         order.setStatus(2);
         orderService.save(order);
-        Users user = userService.findById(order.getCustomerId());
-
-//        for (int i = 0; i < user.getOrders().size(); i++) {
-
-//        }
         return new ResponseEntity(order,HttpStatus.OK);
     }
 
+    // Xóa đơn
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteOrder(@PathVariable Long id){
+        orderService.delete(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     //Tạo đơn
-    @PostMapping("/provider/{id}")
-    public ResponseEntity<Orders> makeNewOrder(@RequestBody Orders order,@PathVariable Long id){
-        Users provider = userService.findById(id);
-//        provider.getOrders().add(order);
-        orderService.save(order);
-        Users user = userService.findById(order.getCustomerId());
-        order.setCustomerId(provider.getId());
-//        user.getOrders().add(order);
+    @PostMapping()
+    public ResponseEntity<Orders> makeNewOrder(@RequestBody Orders order){
         orderService.save(order);
         return new ResponseEntity(order,HttpStatus.OK);
+    }
+
+    //Danh sách đơn của khách
+    @GetMapping("/{id}/customer/{page}")
+    public ResponseEntity<Page<Orders>> findAllRentedOrdersForCustomer(@PathVariable long id,@PathVariable int page){
+        return new ResponseEntity(orderService.findAllRentedOrdersForCustomer(PageRequest.of(page,12),id),HttpStatus.OK);
     }
 }

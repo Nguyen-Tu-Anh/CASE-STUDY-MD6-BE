@@ -6,8 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 
 public interface IOrderService {
-    Page<Orders> findAllRentOrders(Pageable page);
+    Page<Orders> findAllRentOrdersForProvider(Pageable page, Long id);
     void save(Orders order);
     void delete(Long id);
     Orders findById(Long id);
+    Page<Orders> findAllRentedOrdersForCustomer(Pageable page, Long id);
 }

@@ -13,8 +13,8 @@ public class OrderService implements IOrderService{
     IOrderRepo orderRepo;
 
     @Override
-    public Page<Orders> findAllRentOrders(Pageable page) {
-        return orderRepo.findAllRentOrders(page);
+    public Page<Orders> findAllRentOrdersForProvider(Pageable page, Long id) {
+        return orderRepo.findAllRentOrdersForProvider(page,id);
     }
 
     @Override
@@ -30,5 +30,10 @@ public class OrderService implements IOrderService{
     @Override
     public Orders findById(Long id) {
         return orderRepo.findById(id).get();
+    }
+
+    @Override
+    public Page<Orders> findAllRentedOrdersForCustomer(Pageable page, Long id) {
+        return null;
     }
 }

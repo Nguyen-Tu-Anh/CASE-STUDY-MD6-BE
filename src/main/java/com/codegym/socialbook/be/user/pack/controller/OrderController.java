@@ -39,14 +39,23 @@ public class OrderController {
         Orders order = orderService.findById(id);
         order.setStatus(2);
         orderService.save(order);
+        Users user = userService.findById(order.getCustomerId());
+
+//        for (int i = 0; i < user.getOrders().size(); i++) {
+
+//        }
         return new ResponseEntity(order,HttpStatus.OK);
     }
 
     //Tạo đơn
     @PostMapping("/provider/{id}")
     public ResponseEntity<Orders> makeNewOrder(@RequestBody Orders order,@PathVariable Long id){
-        Users user = userService.findById(id);
-        user.getOrders().add(order);
+        Users provider = userService.findById(id);
+//        provider.getOrders().add(order);
+        orderService.save(order);
+        Users user = userService.findById(order.getCustomerId());
+        order.setCustomerId(provider.getId());
+//        user.getOrders().add(order);
         orderService.save(order);
         return new ResponseEntity(order,HttpStatus.OK);
     }

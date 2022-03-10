@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -87,6 +88,9 @@ public class Users {
     //Danh gia cua khach hang
     @ManyToMany
     private Set<Review> reviews;
+
+    @ElementCollection
+    private List<String> images;
 
 
     public Users() {

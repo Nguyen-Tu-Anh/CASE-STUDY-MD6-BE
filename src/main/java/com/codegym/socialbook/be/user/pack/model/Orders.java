@@ -20,6 +20,10 @@ public class Orders {
     //2 : Đã nhận
     //3 : Hoàn thành
     private int status;
+
+    //id của khách
     private long customerId;
+
+    //id của người cung cấp dịch vụ
     private Long providerId;
 }

@@ -89,8 +89,8 @@ public class Users {
     @ManyToMany
     private Set<Review> reviews;
 
-    @ElementCollection
-    private List<String> images;
+    @ManyToMany
+    private Set<Image> images;
 
 
     public Users() {
@@ -122,8 +122,7 @@ public class Users {
         this.password = encode;
     }
 
-
-    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, List<String> images) {
+    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, Set<Image> images) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -151,6 +150,14 @@ public class Users {
         this.images = images;
     }
 
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
+
     public Long getId() {
         return id;
     }
@@ -161,14 +168,6 @@ public class Users {
 
     public String getName() {
         return name;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
     }
 
     public void setName(String name) {

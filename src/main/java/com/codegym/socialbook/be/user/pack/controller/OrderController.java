@@ -1,7 +1,9 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
 import com.codegym.socialbook.be.user.pack.model.Orders;
+import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.service.IOrderService;
+import com.codegym.socialbook.be.user.pack.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     @Autowired
     IOrderService orderService;
+
+    @Autowired
+    IUserService userService;
 
     //Tìm kiếm list đơn được đặt
     @GetMapping("/rented-orders/{page}")
@@ -33,6 +38,15 @@ public class OrderController {
     public ResponseEntity<Orders> changeStatusToOk(@PathVariable Long id){
         Orders order = orderService.findById(id);
         order.setStatus(2);
+        orderService.save(order);
+        return new ResponseEntity(order,HttpStatus.OK);
+    }
+
+    //Tạo đơn
+    @PostMapping("/provider/{id}")
+    public ResponseEntity<Orders> makeNewOrder(@RequestBody Orders order,@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.getOrders().add(order);
         orderService.save(order);
         return new ResponseEntity(order,HttpStatus.OK);
     }

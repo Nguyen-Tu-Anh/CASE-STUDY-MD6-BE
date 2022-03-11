@@ -5,37 +5,21 @@ import java.util.Set;
 public class SignUpForm {
     private String name;
     private String username;
-    private String email;
     private String password;
-    private String avatar;
+    private String email;
+    private String phoneNumber;
     private Set<String> roles;
 
     public SignUpForm() {
     }
 
-    public SignUpForm(String name, String username, String email, String password, String avatar ,Set<String> roles) {
+    public SignUpForm(String name, String username, String password, String email, String phoneNumber, Set<String> roles) {
         this.name = name;
         this.username = username;
-        this.email = email;
         this.password = password;
-        this.avatar = avatar;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.roles = roles;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUsername() {
@@ -46,6 +30,14 @@ public class SignUpForm {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -54,12 +46,12 @@ public class SignUpForm {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Set<String> getRoles() {
@@ -70,4 +62,11 @@ public class SignUpForm {
         this.roles = roles;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

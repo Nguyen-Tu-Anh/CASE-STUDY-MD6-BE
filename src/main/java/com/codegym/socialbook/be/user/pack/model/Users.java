@@ -99,6 +99,22 @@ public class Users {
     }
 
 
+    public Users(String name, String username, String email, String password, String phoneNumber) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Users(String username, String email, String password, Set<Role> roles, String phoneNumber) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.phoneNumber = phoneNumber;
+    }
+
     public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles) {
         this.id = id;
         this.name = name;
@@ -125,21 +141,7 @@ public class Users {
         this.images = images;
     }
 
-    public Users(@NotBlank
-                    @Size(min = 3, max = 50) String name,
-                 @NotBlank
-                    @Size(min = 3,max = 50) String username,
-                 @Size(max = 50)
-                    @Email String email,
-                 String avatar,
-                 @NotBlank
-                    @Size(min = 6,max = 100)String encode) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.avatar = avatar;
-        this.password = encode;
-    }
+
 
 
     public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, Set<String> images, Role role, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, Set<Orders> orders) {
@@ -171,6 +173,7 @@ public class Users {
         this.reviews = reviews;
         this.orders = orders;
     }
+
 
     public Set<Orders> getOrders() {
         return orders;

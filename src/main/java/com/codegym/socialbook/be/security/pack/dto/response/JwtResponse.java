@@ -2,6 +2,9 @@ package com.codegym.socialbook.be.security.pack.dto.response;
 
 
 import com.codegym.socialbook.be.user.pack.model.Users;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
 
 public class JwtResponse {
     private String token;
@@ -11,11 +14,11 @@ public class JwtResponse {
     public JwtResponse() {
     }
 
-
     public JwtResponse(String token, Users users) {
         this.token = token;
         this.users = users;
     }
+
 
     public String getToken() {
         return token;
@@ -25,13 +28,6 @@ public class JwtResponse {
         this.token = token;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public Users getUsers() {
         return users;

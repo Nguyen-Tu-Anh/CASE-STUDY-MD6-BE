@@ -25,18 +25,18 @@ public class UserController {
 
     //lấy ra list 12 người cung cấp dịch vụ
     @GetMapping("/hot/providers")
-    public ResponseEntity<Page<Users>> find12lProvidersSortByStartDate(){
-        return new ResponseEntity(userService.find12ProvidersSortByStartDate(PageRequest.of(0,12)), HttpStatus.OK);
+    public ResponseEntity<Page<Users>> find12lProvidersSortByStartDate() {
+        return new ResponseEntity(userService.find12ProvidersSortByStartDate(PageRequest.of(0, 12)), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> findById(@PathVariable Long id){
-        return new ResponseEntity(userService.findById(id),HttpStatus.OK);
+    public ResponseEntity<Users> findById(@PathVariable Long id) {
+        return new ResponseEntity(userService.findById(id), HttpStatus.OK);
     }
 
     //Chuyển trạng thái
     @PutMapping("/provider/change/{id}")
-    public ResponseEntity changeStatusToOffline(@PathVariable Long id){
+    public ResponseEntity changeStatusToOffline(@PathVariable Long id) {
         Users user = userService.findById(id);
         user.setStatus(2);
         userService.save(user);
@@ -45,16 +45,14 @@ public class UserController {
 
     //update user
     @PutMapping()
-    public ResponseEntity updateUser(@RequestBody Users user){
+    public ResponseEntity updateUser(@RequestBody Users user) {
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //Tìm kiếm list đơn được đặt
     @GetMapping("/rented-orders/{page}")
-    public ResponseEntity<Page<Orders>> findAllRentOrders(@PathVariable int page){
-        return new ResponseEntity(orderService.findAllRentOrders(PageRequest.of(page,12)),HttpStatus.OK);
+    public ResponseEntity<Page<Orders>> findAllRentOrders(@PathVariable int page) {
+        return new ResponseEntity(orderService.findAllRentOrders(PageRequest.of(page, 12)), HttpStatus.OK);
     }
-
-
 }

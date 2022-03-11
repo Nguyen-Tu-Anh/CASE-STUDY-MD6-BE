@@ -50,15 +50,13 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm) {
         if (userService.existsByUsername(signUpForm.getUsername())) {
-            return new ResponseEntity<>(new ResponseMessage("no_user"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseMessage("no_username"), HttpStatus.OK);
         }
         if (userService.existsByEmail(signUpForm.getEmail())) {
             return new ResponseEntity<>(new ResponseMessage("no_email"), HttpStatus.OK);
         }
-        if (signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()) {
-            signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/chinhbeo-18d3b.appspot.com/o/avatar.png?alt=media&token=3511cf81-8df2-4483-82a8-17becfd03211");
-        }
-        Users users = new Users(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getAvatar(), passwordEncoder.encode(signUpForm.getPassword()));
+
+        Users users = new Users(signUpForm.getName(),signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()),signUpForm.getPhoneNumber());
         Set<String> strRoles = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
         strRoles.forEach(role -> {
@@ -83,6 +81,12 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm) {
+//        if (userService.existsByUsername(signInForm.getUsername())) {
+//            return new ResponseEntity<>(new ResponseMessage("no_username"), HttpStatus.OK);
+//        }
+//        if (userService.existsByEmail(signInForm.getPassword())) {
+//            return new ResponseEntity<>(new ResponseMessage("no_pass"), HttpStatus.OK);
+//        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInForm.getUsername(), signInForm.getPassword())
         );
@@ -93,22 +97,22 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token, users));
     }
 
-    @PutMapping("/change-avatar")
-    public ResponseEntity<?> changeAvatar(HttpServletRequest request, @Valid @RequestBody ChangeAvatar changeAvatar) {
-        String jwt = jwtTokenFilter.getJwt(request);
-        String username = jwtProvider.getUserNameFromToken(jwt);
-        Users user;
-        try {
-            if (changeAvatar.getAvatar() == null) {
-                return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
-            } else {
-                user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found -> username" + username));
-                user.setAvatar(changeAvatar.getAvatar());
-                userService.save(user);
-            }
-            return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
-        } catch (UsernameNotFoundException exception) {
-            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
-        }
-    }
+//    @PutMapping("/change-avatar")
+//    public ResponseEntity<?> changeAvatar(HttpServletRequest request, @Valid @RequestBody ChangeAvatar changeAvatar) {
+//        String jwt = jwtTokenFilter.getJwt(request);
+//        String username = jwtProvider.getUserNameFromToken(jwt);
+//        Users user;
+//        try {
+//            if (changeAvatar.getAvatar() == null) {
+//                return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+//            } else {
+//                user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found -> username" + username));
+//                user.setAvatar(changeAvatar.getAvatar());
+//                userService.save(user);
+//            }
+//            return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+//        } catch (UsernameNotFoundException exception) {
+//            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
+//        }
+//    }
 }

@@ -3,6 +3,7 @@ package com.codegym.socialbook.be.user.pack.service;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 public interface IUserService {
     // tìm 12 providers sắp xếp theo ngày gia nhập
@@ -10,4 +11,7 @@ public interface IUserService {
 
     Users findById(Long id);
     void save(Users user);
+
+
+    Users getUserByUserName(String name);
 }

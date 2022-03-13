@@ -1,5 +1,6 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
+import com.codegym.socialbook.be.security.pack.dto.request.UserDto;
 import com.codegym.socialbook.be.user.pack.model.Orders;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.service.IOrderService;
@@ -45,8 +46,12 @@ public class UserController {
 
     //update user
     @PutMapping()
-    public ResponseEntity updateUser(@RequestBody Users user) {
-        userService.save(user);
+    public ResponseEntity updateUser(@RequestBody UserDto userDto) {
+       Users currentUser = userService.getUserByUserName(userDto.getName());
+        if(userDto.getPassword() != null) {
+            currentUser.setPassword(userDto.getPassword());
+        }
+        userService.save(currentUser);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -55,4 +60,5 @@ public class UserController {
     public ResponseEntity<Page<Orders>> findAllRentOrders(@PathVariable int page) {
         return new ResponseEntity(orderService.findAllRentOrders(PageRequest.of(page, 12)), HttpStatus.OK);
     }
+
 }

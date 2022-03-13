@@ -27,4 +27,8 @@ public class UserService implements IUserService{
         userRepo.save(user);
     }
 
+    @Override
+    public Users getUserByUserName(String username) {
+        return userRepo.getUserByUserName(username);
+    }
 }

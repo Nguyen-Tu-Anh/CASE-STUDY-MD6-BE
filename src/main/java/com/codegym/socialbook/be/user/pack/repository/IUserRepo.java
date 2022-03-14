@@ -15,5 +15,4 @@ public interface IUserRepo extends JpaRepository<Users, Long> {
 
     @Query("select u from Users u where u.username = :username")
     Users getUserByUserName(@Param("username") String username);
-
-}
+ }

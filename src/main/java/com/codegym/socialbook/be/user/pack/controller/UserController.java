@@ -45,13 +45,13 @@ public class UserController {
     }
 
     //update user
-    @PutMapping()
-    public ResponseEntity updateUser(@RequestBody UserDto userDto) {
-       Users currentUser = userService.getUserByUserName(userDto.getName());
-        if(userDto.getPassword() != null) {
-            currentUser.setPassword(userDto.getPassword());
+    @PutMapping("/{id}")
+    public ResponseEntity updateUser(@RequestBody Users user, @PathVariable Long id) {
+       Users currentUser = userService.findById(id);
+        if(user.getPassword() == null) {
+            user.setPassword(currentUser.getPassword());
         }
-        userService.save(currentUser);
+        userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -27,4 +27,15 @@ public class UserService implements IUserService{
         userRepo.save(user);
     }
 
+    @Override
+    public Page<Users> find12ProvidersSortByCountOfDate(Pageable page) {
+        return userRepo.find12lProvidersSortByStartDate(page);
+    }
+
+    @Override
+    public Page<Users> showALl(Pageable page) {
+        return userRepo.findAll(page);
+    }
+
+
 }

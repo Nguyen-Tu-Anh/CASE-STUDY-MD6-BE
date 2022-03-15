@@ -52,7 +52,7 @@ public class Users {
 //    @Min(18)
     private int age;
     private String gender;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String city;
     private String nationality;
 
@@ -92,10 +92,6 @@ public class Users {
     @ManyToMany
     private Set<Image> images;
 
-
-    public Users() {
-    }
-
     public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles) {
         this.id = id;
         this.name = name;
@@ -114,15 +110,18 @@ public class Users {
                     @Email String email,
                     String avatar,
                     @NotBlank
-                    @Size(min = 6,max = 100)String encode) {
+                    @Size(min = 6,max = 100)String encode,
+                    String phoneNumber
+    ) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.avatar = avatar;
+        this.phoneNumber = phoneNumber;
         this.password = encode;
     }
 
-    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, Set<Image> images) {
+    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, Date dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, Set<Image> images) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -149,6 +148,11 @@ public class Users {
         this.reviews = reviews;
         this.images = images;
     }
+
+    public Users() {
+
+    }
+
 
     public Set<Image> getImages() {
         return images;
@@ -239,11 +243,11 @@ public class Users {
         this.gender = gender;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

@@ -2,6 +2,7 @@ package com.codegym.socialbook.be.user.pack.service;
 
 import com.codegym.socialbook.be.user.pack.model.Users;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 public interface IUserService {
@@ -11,4 +12,7 @@ public interface IUserService {
     Users findById(Long id);
     // lưu
     void save(Users user);
+    // lấy 12 provider được nhiều hẹn hò nhất
+    Page<Users> find12ProvidersSortByCountOfDate(Pageable page);
+    Page<Users> showALl(Pageable page);
 }

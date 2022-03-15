@@ -59,7 +59,7 @@ public class UserController {
     @PutMapping("/provider")
     public ResponseEntity updateProvider(@RequestBody UpdateProviderDTO provider) {
         Users oldProvider = userService.findById(provider.getId());
-        oldProvider = dtoService.transferDataFromProviderToOldProvider(oldProvider,provider);
+        oldProvider = dtoService.transferDataFromProviderToOldProvider(oldProvider, provider);
         userService.save(oldProvider);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -68,20 +68,32 @@ public class UserController {
     @PutMapping("/user")
     public ResponseEntity updateUser(@RequestBody UpdateUserDTO user) {
         Users oldUser = userService.findById(user.getId());
-        oldUser = dtoService.transferDataFromUserToOldUser(oldUser,user);
+        oldUser = dtoService.transferDataFromUserToOldUser(oldUser, user);
         userService.save(oldUser);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //chuyển trạng thái hoạt động
     @GetMapping("/status/{id}")
-    public ResponseEntity<Integer> changeStatus(@PathVariable Long id){
+    public ResponseEntity<Integer> changeStatus(@PathVariable Long id) {
         Users provider = userService.findById(id);
-        if(provider.getStatus()==1){
+        if (provider.getStatus() == 1) {
             provider.setStatus(2);
-        } else{
+        } else {
             provider.setStatus(1);
         }
-        return new ResponseEntity(provider.getStatus(),HttpStatus.OK);
+        return new ResponseEntity(provider.getStatus(), HttpStatus.OK);
+    }
+
+    // 12 provider nhiều lượt date nhất
+    @GetMapping("/most/date/provider/{page}")
+    public ResponseEntity<Page<Users>> getMostDateProvider(@PathVariable int page) {
+        return new ResponseEntity(userService.find12ProvidersSortByCountOfDate(PageRequest.of(page, 12)), HttpStatus.OK);
+    }
+
+    //show All
+    @GetMapping("/page/{page}")
+    public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
+        return new ResponseEntity(userService.showALl(PageRequest.of(page, 1)), HttpStatus.OK);
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/home")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -43,12 +43,24 @@ public class UserController {
     }
 
     //update user
-    @PutMapping()
-    public ResponseEntity updateUser(@RequestBody Users user){
+//    @PutMapping("/update")
+//    public ResponseEntity updateUser(@RequestBody Users user){
+//        if(user.getPassword() == null) {
+//            user.setPassword(user.getId());
+//        }
+//        userService.save(user);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
+//    //Tìm kiếm theo tên
+    @PutMapping("/update/{id}")
+    public ResponseEntity updateUser(@RequestBody Users user, @PathVariable Long id) {
+
+        Users currentUser = userService.findById(id);
+        if(user.getPassword() == null) {
+            user.setPassword(currentUser.getPassword());
+        }
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
-
-    //Tìm kiếm theo tên
 
 }

@@ -114,11 +114,14 @@ public class Users {
                     @Email String email,
                     String avatar,
                     @NotBlank
-                    @Size(min = 6,max = 100)String encode) {
+                    @Size(min = 6,max = 100)String encode,
+                    String phoneNumber
+    ) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.avatar = avatar;
+        this.phoneNumber = phoneNumber;
         this.password = encode;
     }
 

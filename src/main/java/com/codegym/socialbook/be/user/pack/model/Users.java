@@ -92,10 +92,6 @@ public class Users {
     @ManyToMany
     private Set<Image> images;
 
-
-    public Users() {
-    }
-
     public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles) {
         this.id = id;
         this.name = name;
@@ -152,6 +148,11 @@ public class Users {
         this.reviews = reviews;
         this.images = images;
     }
+
+    public Users() {
+
+    }
+
 
     public Set<Image> getImages() {
         return images;

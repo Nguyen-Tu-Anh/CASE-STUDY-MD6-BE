@@ -78,9 +78,6 @@ public class AuthController {
             }
         });
         users.setRoles(roles);
-        users.setStartDate(new Date(System.currentTimeMillis()));
-        users.setStatus(1);
-        users.setCountOfDate(0L);
         userService.save(users);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }

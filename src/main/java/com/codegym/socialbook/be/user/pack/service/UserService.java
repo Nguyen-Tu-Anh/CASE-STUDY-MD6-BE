@@ -29,13 +29,11 @@ public class UserService implements IUserService{
 
     @Override
     public Page<Users> find12ProvidersSortByCountOfDate(Pageable page) {
-        return userRepo.find12lProvidersSortByStartDate(page);
+        return userRepo.find12MostDatedProvider(page);
     }
 
     @Override
     public Page<Users> showALl(Pageable page) {
         return userRepo.findAll(page);
     }
-
-
 }

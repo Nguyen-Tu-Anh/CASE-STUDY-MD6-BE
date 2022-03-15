@@ -12,7 +12,7 @@ import java.util.Set;
 @Service
 public class DTOService {
 
-    public Users transferDataFromProviderToOldProvider(Users olProvider, UpdateProviderDTO provider){
+    public Users transferDataFromProviderToOldProvider(Users olProvider, UpdateProviderDTO provider) {
         olProvider.setName(provider.getName());
         olProvider.setAge(provider.getAge());
         olProvider.setAvatar(provider.getAvatar());
@@ -35,21 +35,21 @@ public class DTOService {
         olProvider.setImages(provider.getImages());
         Set<Role> roles = olProvider.getRoles();
         Boolean status = true;
-        for (Role r:roles) {
-            if(r.getId()==2)
+        for (Role r : roles) {
+            if (r.getId() == 2)
                 status = false;
         }
-        if(status) roles.add(new Role(2L, RoleName.SP));
+        if (status) roles.add(new Role(2L, RoleName.SP));
         olProvider.setRoles(roles);
         return olProvider;
     }
 
-    public Users transferDataFromUserToOldUser(Users oldUser, UpdateUserDTO user){
+    public Users transferDataFromUserToOldUser(Users oldUser, UpdateUserDTO user) {
         oldUser.setName(user.getName());
         oldUser.setUsername(user.getUsername());
         oldUser.setEmail(user.getEmail());
-        if(user.getPassword() != null){
-        oldUser.setPassword(user.getPassword());
+        if (user.getPassword() != null) {
+            oldUser.setPassword(user.getPassword());
         }
         oldUser.setAvatar(user.getAvatar());
         oldUser.setPhoneNumber(user.getPhoneNumber());

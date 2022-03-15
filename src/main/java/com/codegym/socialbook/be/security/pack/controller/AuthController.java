@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -77,6 +78,9 @@ public class AuthController {
             }
         });
         users.setRoles(roles);
+        users.setStartDate(new Date(System.currentTimeMillis()));
+        users.setStatus(1);
+        users.setCountOfDate(0L);
         userService.save(users);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }

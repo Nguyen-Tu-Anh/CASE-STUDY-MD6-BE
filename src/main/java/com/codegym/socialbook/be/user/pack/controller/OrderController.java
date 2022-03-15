@@ -1,6 +1,7 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
 import com.codegym.socialbook.be.user.pack.model.Orders;
+import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.service.IOrderService;
 import com.codegym.socialbook.be.user.pack.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class OrderController {
         Orders order = orderService.findById(id);
         order.setStatus(2);
         orderService.save(order);
+        Users provider = userService.findById(order.getProviderId());
+        provider.setCountOfDate(provider.getCountOfDate()+1);
+        userService.save(provider);
         return new ResponseEntity(order,HttpStatus.OK);
     }
 

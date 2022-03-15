@@ -57,7 +57,6 @@ public class DTOService {
         oldUser.setNationality(user.getNationality());
         oldUser.setDescription(user.getDescription());
         oldUser.setRequirement(user.getRequirement());
-        oldUser.setFacebookUrl(user.getFacebookUrl());
         oldUser.setIdentify(user.getIdentify());
         oldUser.setImages(user.getImages());
         return oldUser;

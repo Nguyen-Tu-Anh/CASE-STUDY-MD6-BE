@@ -27,8 +27,9 @@ public class Role {
         return id;
     }
 
-    public void setId(Long id) {
+    public Role setId(Long id) {
         this.id = id;
+        return null;
     }
 
     public RoleName getName() {

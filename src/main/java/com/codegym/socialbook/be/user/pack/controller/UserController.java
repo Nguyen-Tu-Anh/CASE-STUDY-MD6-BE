@@ -55,8 +55,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //Tìm kiếm theo tên
-
+    //update profile cho provider
     @PutMapping("/provider")
     public ResponseEntity updateProvider(@RequestBody UpdateProviderDTO provider) {
         Users oldProvider = userService.findById(provider.getId());
@@ -65,11 +64,24 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    //update profile cho user
     @PutMapping("/user")
     public ResponseEntity updateUser(@RequestBody UpdateUserDTO user) {
         Users oldUser = userService.findById(user.getId());
         oldUser = dtoService.transferDataFromUserToOldUser(oldUser,user);
         userService.save(oldUser);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //chuyển trạng thái hoạt động
+    @GetMapping("/status/{id}")
+    public ResponseEntity<Integer> changeStatus(@PathVariable Long id){
+        Users provider = userService.findById(id);
+        if(provider.getStatus()==1){
+            provider.setStatus(2);
+        } else{
+            provider.setStatus(1);
+        }
+        return new ResponseEntity(provider.getStatus(),HttpStatus.OK);
     }
 }

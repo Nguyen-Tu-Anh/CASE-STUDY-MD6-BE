@@ -24,7 +24,6 @@ public class UpdateUserDTO {
     private String nationality;
     private String description;
     private String requirement;
-    private String facebookUrl;
     private String identify;
     @ManyToMany
     private Set<Image> images;

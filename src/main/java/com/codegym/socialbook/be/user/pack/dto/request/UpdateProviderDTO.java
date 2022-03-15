@@ -1,17 +1,11 @@
 package com.codegym.socialbook.be.user.pack.dto.request;
 
-import com.codegym.socialbook.be.security.pack.model.Role;
 import com.codegym.socialbook.be.user.pack.model.Image;
-import com.codegym.socialbook.be.user.pack.model.Review;
 import com.codegym.socialbook.be.user.pack.model.ServiceOfProvider;
 import lombok.Data;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data

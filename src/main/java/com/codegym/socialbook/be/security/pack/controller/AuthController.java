@@ -1,6 +1,8 @@
 package com.codegym.socialbook.be.security.pack.controller;
 
 
+import com.codegym.socialbook.be.security.pack.service.IEmailSender;
+import com.codegym.socialbook.be.security.pack.service.IRegistrationService;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.security.pack.dto.request.ChangeAvatar;
 import com.codegym.socialbook.be.security.pack.dto.request.SignInForm;
@@ -47,6 +49,12 @@ public class AuthController {
     @Autowired
     JwtTokenFilter jwtTokenFilter;
 
+    @Autowired
+    IEmailSender emailSender;
+
+    @Autowired
+    IRegistrationService registrationService;
+
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm) {
         if (userService.existsByUsername(signUpForm.getUsername())) {
@@ -76,8 +84,9 @@ public class AuthController {
                     roles.add(userRole);
             }
         });
+
         users.setRoles(roles);
-        userService.save(users);
+        registrationService.register(users);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }
 
@@ -111,4 +120,5 @@ public class AuthController {
             return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
+
 }

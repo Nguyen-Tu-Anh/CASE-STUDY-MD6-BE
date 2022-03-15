@@ -1,6 +1,7 @@
 package com.codegym.socialbook.be.user.pack.service;
 
 import com.codegym.socialbook.be.security.pack.model.Role;
+import com.codegym.socialbook.be.security.pack.model.RoleName;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateProviderDTO;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateUserDTO;
 import com.codegym.socialbook.be.user.pack.model.Users;
@@ -35,10 +36,10 @@ public class DTOService {
         Set<Role> roles = olProvider.getRoles();
         Boolean status = true;
         for (Role r:roles) {
-            if(r.getId()!=2)
+            if(r.getId()==2)
                 status = false;
         }
-        if(status) roles.add(new Role().setId(2L));
+        if(status) roles.add(new Role(2L, RoleName.SP));
         olProvider.setRoles(roles);
         return olProvider;
     }

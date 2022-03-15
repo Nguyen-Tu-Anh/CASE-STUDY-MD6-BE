@@ -36,6 +36,4 @@ public class UserService implements IUserService{
     public Page<Users> showALl(Pageable page) {
         return userRepo.findAll(page);
     }
-
-
 }

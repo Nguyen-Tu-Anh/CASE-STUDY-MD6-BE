@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 public interface IUserService {
     // tìm 12 providers sắp xếp theo ngày gia nhập
     Page<Users> find12ProvidersSortByStartDate(Pageable page);
+    //tìm theo id
     Users findById(Long id);
+    // lưu
     void save(Users user);
 }

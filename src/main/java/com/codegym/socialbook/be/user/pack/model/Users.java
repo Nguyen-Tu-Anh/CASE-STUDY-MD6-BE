@@ -92,10 +92,6 @@ public class Users {
     @ManyToMany
     private Set<Image> images;
 
-
-    public Users() {
-    }
-
     public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles) {
         this.id = id;
         this.name = name;
@@ -114,11 +110,14 @@ public class Users {
                     @Email String email,
                     String avatar,
                     @NotBlank
-                    @Size(min = 6,max = 100)String encode) {
+                    @Size(min = 6,max = 100)String encode,
+                    String phoneNumber
+    ) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.avatar = avatar;
+        this.phoneNumber = phoneNumber;
         this.password = encode;
     }
 
@@ -149,6 +148,11 @@ public class Users {
         this.reviews = reviews;
         this.images = images;
     }
+
+    public Users() {
+
+    }
+
 
     public Set<Image> getImages() {
         return images;

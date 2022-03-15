@@ -1,5 +1,7 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
+import com.codegym.socialbook.be.security.pack.model.Role;
+import com.codegym.socialbook.be.security.pack.model.RoleName;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateProviderDTO;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateUserDTO;
 import com.codegym.socialbook.be.user.pack.model.Users;
@@ -12,6 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Provider;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -26,6 +31,8 @@ public class UserController {
 
     @Autowired
     DTOService dtoService;
+
+
 
     //lấy ra list 12 người cung cấp dịch vụ sắp xếp theo ngày đăng kí từ mới tới cũ
     @GetMapping("/hot/providers/{page}")
@@ -48,12 +55,6 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //update user
-    @PutMapping()
-    public ResponseEntity updateUser(@RequestBody Users user) {
-        userService.save(user);
-        return new ResponseEntity(HttpStatus.OK);
-    }
 
     //update profile cho provider
     @PutMapping("/provider")
@@ -96,4 +97,5 @@ public class UserController {
     public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
         return new ResponseEntity(userService.showALl(PageRequest.of(page, 1)), HttpStatus.OK);
     }
+
 }

@@ -1,6 +1,8 @@
 package com.codegym.socialbook.be.security.pack.controller;
 
 
+import com.codegym.socialbook.be.security.pack.service.IEmailSender;
+import com.codegym.socialbook.be.security.pack.service.IRegistrationService;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.security.pack.dto.request.ChangeAvatar;
 import com.codegym.socialbook.be.security.pack.dto.request.SignInForm;
@@ -48,6 +50,12 @@ public class AuthController {
     @Autowired
     JwtTokenFilter jwtTokenFilter;
 
+    @Autowired
+    IEmailSender emailSender;
+
+    @Autowired
+    IRegistrationService registrationService;
+
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm) {
         if (userService.existsByUsername(signUpForm.getUsername())) {
@@ -59,7 +67,7 @@ public class AuthController {
         if (signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()) {
             signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/chinhbeo-18d3b.appspot.com/o/avatar.png?alt=media&token=3511cf81-8df2-4483-82a8-17becfd03211");
         }
-        Users users = new Users(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getAvatar(), passwordEncoder.encode(signUpForm.getPassword()));
+        Users users = new Users(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getAvatar(), passwordEncoder.encode(signUpForm.getPassword()),signUpForm.getPhoneNumber());
         Set<String> strRoles = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
         strRoles.forEach(role -> {
@@ -77,11 +85,9 @@ public class AuthController {
                     roles.add(userRole);
             }
         });
+
         users.setRoles(roles);
-        users.setStartDate(new Date(System.currentTimeMillis()));
-        users.setStatus(1);
-        users.setCountOfDate(0L);
-        userService.save(users);
+        registrationService.register(users);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }
 
@@ -115,4 +121,5 @@ public class AuthController {
             return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
+
 }

@@ -17,7 +17,7 @@ public class DTOService {
         olProvider.setAge(provider.getAge());
         olProvider.setAvatar(provider.getAvatar());
         olProvider.setUsername(provider.getUsername());
-        olProvider.setUsername(provider.getEmail());
+        olProvider.setEmail(provider.getEmail());
         if (provider.getPassword() != null) {
             olProvider.setPassword(provider.getPassword());
         }

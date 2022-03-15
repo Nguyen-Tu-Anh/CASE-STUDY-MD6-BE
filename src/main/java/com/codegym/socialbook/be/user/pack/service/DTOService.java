@@ -35,7 +35,7 @@ public class DTOService {
         Set<Role> roles = olProvider.getRoles();
         Boolean status = true;
         for (Role r:roles) {
-            if(r.getId()!=2)
+            if(r.getId() ==2)
                 status = false;
         }
         if(status) roles.add(new Role().setId(2L));

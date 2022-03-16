@@ -73,7 +73,7 @@ public class AuthController {
         strRoles.forEach(role -> {
             switch (role) {
                 case "admin":
-                    Role adminRole = roleService.findByName(RoleName.ADMIN).orElseThrow(() -> new RuntimeException("Role not found"));
+                    Role adminRole = roleService.findByName(RoleName.USER).orElseThrow(() -> new RuntimeException("Role not found"));
                     roles.add(adminRole);
                     break;
                 case "sp":
@@ -81,12 +81,15 @@ public class AuthController {
                     roles.add(spRole);
                     break;
                 default:
-                    Role userRole = roleService.findByName(RoleName.USER).orElseThrow(() -> new RuntimeException("Role not found"));
+                    Role userRole = roleService.findByName(RoleName.ADMIN).orElseThrow(() -> new RuntimeException("Role not found"));
                     roles.add(userRole);
             }
         });
 
         users.setRoles(roles);
+        users.setStatus(1);
+        users.setStartDate(new Date(System.currentTimeMillis()));
+        users.setCountOfDate(0L);
         registrationService.register(users);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }

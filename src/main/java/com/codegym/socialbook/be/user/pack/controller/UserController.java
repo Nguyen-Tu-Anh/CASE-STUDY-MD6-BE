@@ -93,13 +93,30 @@ public class UserController {
     //show All
     @GetMapping("/page/{page}")
     public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
-        return new ResponseEntity(userService.showALl(PageRequest.of(page, 1)), HttpStatus.OK);
+        return new ResponseEntity(userService.showALl(PageRequest.of(page, 12)), HttpStatus.OK);
     }
 
     //tìm kiếm theo trường
-    @PostMapping("/search/{page}")
+    @PostMapping  ("/search/{page}")
     public ResponseEntity<Page<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
         return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,12)), HttpStatus.OK);
     }
 
+    //Ban 1 user
+    @GetMapping("/ban/{id}")
+    public ResponseEntity banUser(@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.setStatus(3);
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //Unban 1 user
+    @GetMapping("/unban/{id}")
+    public ResponseEntity unBanUser(@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.setStatus(1);
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

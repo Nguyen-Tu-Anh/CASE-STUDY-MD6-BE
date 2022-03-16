@@ -44,52 +44,33 @@ public class UserService implements IUserService {
 
 
     @Override
-    public Set<Users> search(SearchForm searchForm) {
-        Set<Users> listReturn = new HashSet<>();
-        if (searchForm.getName() != null) {
-            List<Users> byUserName = findListUsersByName(searchForm.getName());
-            for (Users u : byUserName) {
-                listReturn.add(u);
-            }
-        }
-        if (searchForm.getCity() != null) {
-            List<Users> byAddress = findListUsersByCity(searchForm.getCity());
-            for (Users u : byAddress) {
-                listReturn.add(u);
-            }
-        }
-        if (searchForm.getAge() != 0) {
-            List<Users> byAge = findListUsersByAge(searchForm.getAge());
-            for (Users u : byAge) {
-                listReturn.add(u);
-            }
-        }
-        if (searchForm.getGender() != null) {
-            List<Users> byGender = findListUsersByGender(searchForm.getGender());
-            for (Users u : byGender) {
-                listReturn.add(u);
-            }
-        }
-        return listReturn;
+    public Page<Users> search(SearchForm searchForm,Pageable page) {
+        int maxAge = searchForm.getMaxAge();
+        int minAge = searchForm.getMinAge();
+        String name = searchForm.getName();
+        String city = searchForm.getCity();
+        String gender = searchForm.getGender();
+        return userRepo.searchProvider(maxAge,minAge,name,city,gender,page);
     }
 
-    @Override
-    public List<Users> findListUsersByName(String name) {
-        return userRepo.findAllByNameContaining(name);
-    }
-
-    @Override
-    public List<Users> findListUsersByAge(int age) {
-        return userRepo.findAllByAgeContaining(age);
-    }
-
-    @Override
-    public List<Users> findListUsersByCity(String city) {
-        return userRepo.findAllByCityContaining(city);
-    }
-
-    @Override
-    public List<Users> findListUsersByGender(String gender) {
-        return userRepo.findAllByGenderContaining(gender);
-    }
+//    @Override
+//    public List<Users> findListUsersByName(String name) {
+//        return userRepo.findAllByNameContaining(name);
+//    }
+//
+//    @Override
+//    public List<Users> findListUsersByAge(int maxAge, int minAge) {
+//        return userRepo.findAllByAgeContaining(maxAge, minAge);
+//    }
+//
+//    @Override
+//    public List<Users> findListUsersByCity(String city) {
+//        return userRepo.findAllByCityContaining(city);
+//    }
+//
+//    @Override
+//    public List<Users> findListUsersByGender(String gender) {
+//        return userRepo.findAllByGenderContaining(gender);
+//    }
 }
+

@@ -19,9 +19,9 @@ public interface IUserService {
     // lấy 12 provider được nhiều hẹn hò nhất
     Page<Users> find12ProvidersSortByCountOfDate(Pageable page);
     Page<Users> showALl(Pageable page);
-    Set<Users> search(SearchForm searchForm);
-    List<Users> findListUsersByName(String name);
-    List<Users> findListUsersByAge(int age);
-    List<Users> findListUsersByCity(String address);
-    List<Users> findListUsersByGender(String gender);;
+    Page<Users> search(SearchForm searchForm,Pageable page);
+//    List<Users> findListUsersByName(String name);
+//    List<Users> findListUsersByAge(int maxAge, int minAge);
+//    List<Users> findListUsersByCity(String address);
+//    List<Users> findListUsersByGender(String gender);;
 }

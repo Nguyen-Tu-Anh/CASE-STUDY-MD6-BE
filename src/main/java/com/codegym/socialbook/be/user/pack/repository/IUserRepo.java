@@ -19,12 +19,18 @@ public interface IUserRepo extends JpaRepository<Users, Long> {
     @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 order by u.count_of_date desc")
     Page<Users> find12MostDatedProvider(Pageable page);
 
+//    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and u.name like %:name%")
+//    List<Users> findAllByNameContaining(@Param("name") String name);
+//
+//    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and u.age <= :maxAge and u.age >= :minAge")
+//    List<Users> findAllByAgeContaining(@Param("maxAge") int maxAge, @Param("minAge") int minAge);
+//
+//    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and u.city like %:city%")
+//    List<Users> findAllByCityContaining(@Param("city") String city);
+//
+//    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and u.gender like %:gender%")
+//    List<Users> findAllByGenderContaining(@Param("gender") String gender);
 
-    List<Users> findAllByNameContaining(String name);
-
-    List<Users> findAllByAgeContaining(int age);
-
-    List<Users> findAllByCityContaining(String city);
-
-    List<Users> findAllByGenderContaining(String gender);
+    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and ( u.age <= :maxAge and u.age >=:minAge or u.name like %:name% or u.city like %:city% or u.gender like %:gender%) ")
+    Page<Users> searchProvider(@Param("maxAge") int maxAge, @Param("minAge") int minAge,@Param("name") String name,@Param("city") String city,@Param("gender") String gender,Pageable page);
 }

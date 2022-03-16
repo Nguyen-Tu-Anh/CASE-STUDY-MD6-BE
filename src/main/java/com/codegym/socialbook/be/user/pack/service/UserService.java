@@ -1,5 +1,6 @@
 package com.codegym.socialbook.be.user.pack.service;
 
+import com.codegym.socialbook.be.user.pack.dto.request.SearchForm;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.repository.IUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
     @Autowired
     IUserRepo userRepo;
 
@@ -36,4 +41,36 @@ public class UserService implements IUserService{
     public Page<Users> showALl(Pageable page) {
         return userRepo.findAll(page);
     }
+
+
+    @Override
+    public Page<Users> search(SearchForm searchForm,Pageable page) {
+        int maxAge = searchForm.getMaxAge();
+        int minAge = searchForm.getMinAge();
+        String name = searchForm.getName();
+        String city = searchForm.getCity();
+        String gender = searchForm.getGender();
+        return userRepo.searchProvider(maxAge,minAge,name,city,gender,page);
+    }
+
+//    @Override
+//    public List<Users> findListUsersByName(String name) {
+//        return userRepo.findAllByNameContaining(name);
+//    }
+//
+//    @Override
+//    public List<Users> findListUsersByAge(int maxAge, int minAge) {
+//        return userRepo.findAllByAgeContaining(maxAge, minAge);
+//    }
+//
+//    @Override
+//    public List<Users> findListUsersByCity(String city) {
+//        return userRepo.findAllByCityContaining(city);
+//    }
+//
+//    @Override
+//    public List<Users> findListUsersByGender(String gender) {
+//        return userRepo.findAllByGenderContaining(gender);
+//    }
 }
+

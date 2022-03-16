@@ -1,7 +1,6 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
-import com.codegym.socialbook.be.security.pack.model.Role;
-import com.codegym.socialbook.be.security.pack.model.RoleName;
+import com.codegym.socialbook.be.user.pack.dto.request.SearchForm;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateProviderDTO;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateUserDTO;
 import com.codegym.socialbook.be.user.pack.model.Users;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Provider;
-import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -96,6 +94,12 @@ public class UserController {
     @GetMapping("/page/{page}")
     public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
         return new ResponseEntity(userService.showALl(PageRequest.of(page, 1)), HttpStatus.OK);
+    }
+
+    //tìm kiếm theo trường
+    @GetMapping("/search/{page}")
+    public ResponseEntity<Set<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
+        return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,12)), HttpStatus.OK);
     }
 
 }

@@ -247,7 +247,7 @@ public class Users {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(Date  dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

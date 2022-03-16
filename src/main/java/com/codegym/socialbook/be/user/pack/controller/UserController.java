@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.security.Provider;
 
 @RestController
 @CrossOrigin("*")
@@ -29,6 +29,8 @@ public class UserController {
 
     @Autowired
     DTOService dtoService;
+
+
 
     //lấy ra list 12 người cung cấp dịch vụ sắp xếp theo ngày đăng kí từ mới tới cũ
     @GetMapping("/hot/providers/{page}")
@@ -51,12 +53,6 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //update user
-    @PutMapping()
-    public ResponseEntity updateUser(@RequestBody Users user) {
-        userService.save(user);
-        return new ResponseEntity(HttpStatus.OK);
-    }
 
     //update profile cho provider
     @PutMapping("/provider")
@@ -105,4 +101,5 @@ public class UserController {
     public ResponseEntity<Set<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
         return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,12)), HttpStatus.OK);
     }
+
 }

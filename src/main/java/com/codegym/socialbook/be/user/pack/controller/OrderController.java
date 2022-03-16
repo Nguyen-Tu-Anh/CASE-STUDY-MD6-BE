@@ -55,6 +55,7 @@ public class OrderController {
     //Tạo đơn
     @PostMapping()
     public ResponseEntity<Orders> makeNewOrder(@RequestBody Orders order){
+        order.setStatus(1);
         orderService.save(order);
         return new ResponseEntity(order,HttpStatus.OK);
     }
@@ -63,5 +64,14 @@ public class OrderController {
     @GetMapping("/{id}/customer/{page}")
     public ResponseEntity<Page<Orders>> findAllRentedOrdersForCustomer(@PathVariable long id,@PathVariable int page){
         return new ResponseEntity(orderService.findAllRentedOrdersForCustomer(PageRequest.of(page,12),id),HttpStatus.OK);
+    }
+
+    //Đã sử dụng xong dịch vụ
+    @GetMapping("/complete/{id}")
+    public ResponseEntity<Users> completeOrder(@PathVariable Long id){
+        Orders order = orderService.findById(id);
+        order.setStatus(3);
+        orderService.save(order);
+        return new ResponseEntity(order,HttpStatus.OK);
     }
 }

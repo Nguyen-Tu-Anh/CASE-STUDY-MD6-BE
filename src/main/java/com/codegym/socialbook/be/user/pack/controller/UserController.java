@@ -97,8 +97,8 @@ public class UserController {
     }
 
     //tìm kiếm theo trường
-    @GetMapping("/search/{page}")
-    public ResponseEntity<Set<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
+    @PostMapping("/search/{page}")
+    public ResponseEntity<Page<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
         return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,12)), HttpStatus.OK);
     }
 

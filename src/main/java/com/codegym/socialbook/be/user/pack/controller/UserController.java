@@ -1,5 +1,7 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
+import com.codegym.socialbook.be.security.pack.model.Role;
+import com.codegym.socialbook.be.security.pack.model.RoleName;
 import com.codegym.socialbook.be.user.pack.dto.request.SearchForm;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateProviderDTO;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateUserDTO;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Provider;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -87,19 +90,19 @@ public class UserController {
     // 12 provider nhiều lượt date nhất
     @GetMapping("/most/date/provider/{page}")
     public ResponseEntity<Page<Users>> getMostDateProvider(@PathVariable int page) {
-        return new ResponseEntity(userService.find12ProvidersSortByCountOfDate(PageRequest.of(page, 12)), HttpStatus.OK);
+        return new ResponseEntity(userService.find12ProvidersSortByCountOfDate(PageRequest.of(page, 6)), HttpStatus.OK);
     }
 
     //show All
     @GetMapping("/page/{page}")
     public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
-        return new ResponseEntity(userService.showALl(PageRequest.of(page, 12)), HttpStatus.OK);
+        return new ResponseEntity(userService.showALl(PageRequest.of(page, 6)), HttpStatus.OK);
     }
 
     //tìm kiếm theo trường
     @PostMapping  ("/search/{page}")
     public ResponseEntity<Page<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
-        return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,12)), HttpStatus.OK);
+        return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,6)), HttpStatus.OK);
     }
 
     //Ban 1 user
@@ -120,16 +123,32 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-//    //chuyển trạng thái hoạt động
-//    @GetMapping("/status/{id}")
-//    public ResponseEntity<Integer> changeStatus(@PathVariable Long id){
-//        Users provider = userService.findById(id);
-//        if(provider.getStatus()==1){
-//            provider.setStatus(2);
-//        } else{
-//            provider.setStatus(1);
-//        }
-//        return new ResponseEntity(provider.getStatus(),HttpStatus.OK);
-//    }
+    //Cho lên admin
+    @GetMapping("/make/admin/{id}")
+    public ResponseEntity makeAdmin(@PathVariable Long id){
+        userService.makeAdmin(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
+    //Xóa khỏi admin
+    @GetMapping("/remove/admin/{id}")
+    public ResponseEntity removeAdmin(@PathVariable Long id){
+        userService.removeAdmin(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // Chuyển trạng thái sang online
+    @GetMapping("/online/{id}")
+    public ResponseEntity changeStatusToOnline(@PathVariable Long id){
+        Users user = userService.findById(id);
+        if(user.getStatus()==1){
+            user.setStatus(2);
+        } else {
+           if(user.getStatus()==2){
+               user.setStatus(1);
+           }
+        }
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

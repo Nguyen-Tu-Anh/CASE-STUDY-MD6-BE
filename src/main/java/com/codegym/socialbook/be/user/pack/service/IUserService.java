@@ -18,8 +18,14 @@ public interface IUserService {
     void save(Users user);
     // lấy 12 provider được nhiều hẹn hò nhất
     Page<Users> find12ProvidersSortByCountOfDate(Pageable page);
+    // show toàn bộ user
     Page<Users> showALl(Pageable page);
+    // tìm kiếm user
     Page<Users> search(SearchForm searchForm,Pageable page);
+    //remove admin
+    void removeAdmin(Long id);
+    //cho lên thành admin
+    void makeAdmin(Long id);
 //    List<Users> findListUsersByName(String name);
 //    List<Users> findListUsersByAge(int maxAge, int minAge);
 //    List<Users> findListUsersByCity(String address);

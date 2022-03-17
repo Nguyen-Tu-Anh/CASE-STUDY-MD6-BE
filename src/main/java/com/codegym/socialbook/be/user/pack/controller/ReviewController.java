@@ -30,7 +30,7 @@ public class ReviewController {
     //show All comen provider
     @GetMapping("/{id}/chat/{page}")
     public ResponseEntity<Page<Chat>> showAll( @PathVariable int page,@PathVariable Long id) {
-        return new ResponseEntity(chatService.findAllComenUser(PageRequest.of(page, 6),id), HttpStatus.OK);
+        return new ResponseEntity(chatService.findAllComenUser(PageRequest.of(page, 4),id), HttpStatus.OK);
     }
 
     @PostMapping("/create")

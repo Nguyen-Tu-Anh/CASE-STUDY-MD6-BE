@@ -22,7 +22,7 @@ public class SignUpForm {
         this.avatar = avatar;
         this.phoneNumber = phoneNumber;
         this.roles = roles;
-    }
+    }   
 
     public String getName() {
         return name;

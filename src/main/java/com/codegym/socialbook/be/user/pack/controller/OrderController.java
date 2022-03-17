@@ -18,8 +18,10 @@ public class OrderController {
     @Autowired
     IOrderService orderService;
 
+
     @Autowired
     IUserService userService;
+
 
     //Tìm kiếm list đơn được đặt
     @GetMapping("/{id}/provider/{page}")
@@ -27,11 +29,13 @@ public class OrderController {
         return new ResponseEntity(orderService.findAllRentOrdersForProvider(PageRequest.of(page,12),id), HttpStatus.OK);
     }
 
+
     //Xem chi tiết đơn
     @GetMapping("/{id}")
     public ResponseEntity<Orders> findOrderById(@PathVariable Long id){
         return new ResponseEntity(orderService.findById(id), HttpStatus.OK);
     }
+
 
     //Xác nhận đơn
     @PutMapping("/{id}")
@@ -45,12 +49,14 @@ public class OrderController {
         return new ResponseEntity(order,HttpStatus.OK);
     }
 
+
     // Xóa đơn
     @DeleteMapping("/{id}")
     public ResponseEntity deleteOrder(@PathVariable Long id){
         orderService.delete(id);
         return new ResponseEntity(HttpStatus.OK);
     }
+
 
     //Tạo đơn
     @PostMapping()
@@ -60,11 +66,13 @@ public class OrderController {
         return new ResponseEntity(order,HttpStatus.OK);
     }
 
+
     //Danh sách đơn của khách
     @GetMapping("/{id}/customer/{page}")
     public ResponseEntity<Page<Orders>> findAllRentedOrdersForCustomer(@PathVariable long id,@PathVariable int page){
         return new ResponseEntity(orderService.findAllRentedOrdersForCustomer(PageRequest.of(page,12),id),HttpStatus.OK);
     }
+
 
     //Đã sử dụng xong dịch vụ
     @GetMapping("/complete/{id}")
@@ -74,4 +82,5 @@ public class OrderController {
         orderService.save(order);
         return new ResponseEntity(order,HttpStatus.OK);
     }
+
 }

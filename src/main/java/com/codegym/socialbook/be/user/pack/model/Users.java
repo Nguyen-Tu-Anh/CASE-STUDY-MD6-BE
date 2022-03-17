@@ -85,10 +85,6 @@ public class Users {
     @ManyToMany
     private Set<ServiceOfProvider> serviceOfProviders;
 
-    //Danh gia cua khach hang
-    @ManyToMany
-    private Set<Review> reviews;
-
     @ManyToMany
     private Set<Image> images;
 
@@ -121,7 +117,7 @@ public class Users {
         this.password = encode;
     }
 
-    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, Date dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, Set<Image> images) {
+    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, Date dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Image> images) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -145,21 +141,11 @@ public class Users {
         this.identify = identify;
         this.price = price;
         this.serviceOfProviders = serviceOfProviders;
-        this.reviews = reviews;
         this.images = images;
     }
 
     public Users() {
 
-    }
-
-
-    public Set<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(Set<Image> images) {
-        this.images = images;
     }
 
     public Long getId() {
@@ -218,7 +204,6 @@ public class Users {
         this.roles = roles;
     }
 
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -247,7 +232,7 @@ public class Users {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date  dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -331,7 +316,6 @@ public class Users {
         this.identify = identify;
     }
 
-
     public double getPrice() {
         return price;
     }
@@ -348,11 +332,11 @@ public class Users {
         this.serviceOfProviders = serviceOfProviders;
     }
 
-    public Set<Review> getReviews() {
-        return reviews;
+    public Set<Image> getImages() {
+        return images;
     }
 
-    public void setReviews(Set<Review> reviews) {
-        this.reviews = reviews;
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 }

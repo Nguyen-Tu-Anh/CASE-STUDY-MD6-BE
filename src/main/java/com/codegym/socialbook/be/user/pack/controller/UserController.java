@@ -119,4 +119,17 @@ public class UserController {
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+//    //chuyển trạng thái hoạt động
+//    @GetMapping("/status/{id}")
+//    public ResponseEntity<Integer> changeStatus(@PathVariable Long id){
+//        Users provider = userService.findById(id);
+//        if(provider.getStatus()==1){
+//            provider.setStatus(2);
+//        } else{
+//            provider.setStatus(1);
+//        }
+//        return new ResponseEntity(provider.getStatus(),HttpStatus.OK);
+//    }
+
 }

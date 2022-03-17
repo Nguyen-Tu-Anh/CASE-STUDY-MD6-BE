@@ -52,6 +52,8 @@ public class DTOService {
             oldUser.setPassword(user.getPassword());
         }
         oldUser.setAvatar(user.getAvatar());
+        oldUser.setDateOfBirth(user.getDateOfBirth());
+        oldUser.setGender(user.getGender());
         oldUser.setPhoneNumber(user.getPhoneNumber());
         oldUser.setAge(user.getAge());
         oldUser.setCity(user.getCity());

@@ -85,7 +85,6 @@ public class AuthController {
                     roles.add(userRole);
             }
         });
-
         users.setRoles(roles);
         users.setStatus(1);
         users.setStartDate(new Date(System.currentTimeMillis()));

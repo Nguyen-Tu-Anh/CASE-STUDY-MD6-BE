@@ -1,9 +1,8 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
-import com.codegym.socialbook.be.security.pack.model.Role;
-import com.codegym.socialbook.be.security.pack.model.RoleName;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateProviderDTO;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateUserDTO;
+import com.codegym.socialbook.be.user.pack.model.Orders;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.service.DTOService;
 import com.codegym.socialbook.be.user.pack.service.IOrderService;
@@ -15,8 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Provider;
-import java.util.Set;
+import java.sql.Date;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -26,11 +25,12 @@ public class UserController {
     @Autowired
     IUserService userService;
 
-    @Autowired
-    IOrderService orderService;
 
     @Autowired
     DTOService dtoService;
+
+    @Autowired
+    IOrderService orderService;
 
 
 
@@ -96,6 +96,18 @@ public class UserController {
     @GetMapping("/page/{page}")
     public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
         return new ResponseEntity(userService.showALl(PageRequest.of(page, 1)), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/showAllOrders")
+    public ResponseEntity<List<Orders>> findAll(@PathVariable Long id) {
+        return new ResponseEntity(orderService.findAllByCustomerId(id), HttpStatus.OK);
+    }
+
+    @PostMapping("/createOrder")
+    public ResponseEntity<?> create(@RequestBody Orders order) {
+        order.setDateOfOrder(new Date(System.currentTimeMillis()));
+        order.setStatus(1);
+        return new ResponseEntity<>(orderService.save(order), HttpStatus.OK);
     }
 
 }

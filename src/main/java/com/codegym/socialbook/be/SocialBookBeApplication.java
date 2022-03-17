@@ -9,13 +9,14 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
+
 @SpringBootApplication
 public class SocialBookBeApplication {
+
 
     public static void main(String[] args) {
         SpringApplication.run(SocialBookBeApplication.class, args);
     }
-
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -31,5 +32,4 @@ public class SocialBookBeApplication {
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
-
 }

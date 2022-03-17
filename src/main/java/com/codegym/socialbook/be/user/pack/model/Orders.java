@@ -1,7 +1,6 @@
 package com.codegym.socialbook.be.user.pack.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -22,8 +21,11 @@ public class Orders {
     private int status;
 
     //id của khách
-    private long customerId;
+    @ManyToOne
+    private Users customer;
 
     //id của người cung cấp dịch vụ
-    private Long providerId;
+
+    @ManyToOne
+    private Users provider;
 }

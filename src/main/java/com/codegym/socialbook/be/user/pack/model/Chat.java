@@ -16,5 +16,5 @@ public class Chat {
     Users customer;
 
     @ManyToOne
-    Users nccdv;
+    Users provider;
 }

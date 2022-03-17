@@ -3,10 +3,12 @@ package com.codegym.socialbook.be.user.pack.controller;
 import com.codegym.socialbook.be.user.pack.dto.request.SearchForm;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateProviderDTO;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateUserDTO;
+import com.codegym.socialbook.be.user.pack.model.Review;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.service.DTOService;
 import com.codegym.socialbook.be.user.pack.service.IOrderService;
 import com.codegym.socialbook.be.user.pack.service.IUserService;
+import com.codegym.socialbook.be.user.pack.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,11 +34,14 @@ public class UserController {
 
 
 
+
+
     //lấy ra list 12 người cung cấp dịch vụ sắp xếp theo ngày đăng kí từ mới tới cũ
     @GetMapping("/hot/providers/{page}")
     public ResponseEntity<Page<Users>> find12lProvidersSortByStartDate(@PathVariable int page) {
         return new ResponseEntity(userService.find12ProvidersSortByStartDate(PageRequest.of(page, 12)), HttpStatus.OK);
     }
+
 
     // Trả về 1 đối tượng user
     @GetMapping("/{id}")

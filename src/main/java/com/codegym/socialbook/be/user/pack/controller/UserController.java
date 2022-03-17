@@ -123,18 +123,21 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    //Cho lên admin
     @GetMapping("/make/admin/{id}")
     public ResponseEntity makeAdmin(@PathVariable Long id){
         userService.makeAdmin(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    //Xóa khỏi admin
     @GetMapping("/remove/admin/{id}")
     public ResponseEntity removeAdmin(@PathVariable Long id){
         userService.removeAdmin(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // Chuyển trạng thái sang online
     @GetMapping("/online/{id}")
     public ResponseEntity changeStatusToOnline(@PathVariable Long id){
         Users user = userService.findById(id);

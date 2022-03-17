@@ -1,14 +1,14 @@
 package com.codegym.socialbook.be.user.pack.service;
 
 import com.codegym.socialbook.be.user.pack.model.Orders;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+import java.util.Optional;
 
 public interface IOrderService {
-    Page<Orders> findAllRentOrdersForProvider(Pageable page, Long id);
-    void save(Orders order);
-    void delete(Long id);
-    Orders findById(Long id);
-    Page<Orders> findAllRentedOrdersForCustomer(Pageable page, Long id);
+    List<Orders> findAllByCustomerId(Long id);
+    List<Orders> findAllByProviderId(Long id);
+    Orders save(Orders order);
+    Optional<Orders> findById(Long id);
+    void deleteById(Long id);
 }

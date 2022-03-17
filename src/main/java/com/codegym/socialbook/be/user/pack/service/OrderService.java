@@ -3,37 +3,37 @@ package com.codegym.socialbook.be.user.pack.service;
 import com.codegym.socialbook.be.user.pack.model.Orders;
 import com.codegym.socialbook.be.user.pack.repository.IOrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService implements IOrderService{
     @Autowired
     IOrderRepo orderRepo;
-
     @Override
-    public Page<Orders> findAllRentOrdersForProvider(Pageable page, Long id) {
-        return orderRepo.findAllRentOrdersForProvider(page,id);
+    public List<Orders> findAllByCustomerId(Long id) {
+        return orderRepo.findAllByCustomerId(id);
     }
 
     @Override
-    public void save(Orders order) {
-        orderRepo.save(order);
+    public List<Orders> findAllByProviderId(Long id) {
+        return orderRepo.findAllByProviderId(id);
     }
 
     @Override
-    public void delete(Long id) {
-        orderRepo.deleteById(id);
+    public Orders save(Orders order) {
+        return orderRepo.save(order);
     }
 
     @Override
-    public Orders findById(Long id) {
-        return orderRepo.findById(id).get();
+    public Optional<Orders> findById(Long id) {
+        return orderRepo.findById(id);
     }
 
     @Override
-    public Page<Orders> findAllRentedOrdersForCustomer(Pageable page, Long id) {
-        return null;
+    public void deleteById(Long id) {
+
     }
 }

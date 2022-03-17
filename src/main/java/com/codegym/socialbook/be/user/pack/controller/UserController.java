@@ -5,6 +5,7 @@ import com.codegym.socialbook.be.security.pack.model.RoleName;
 import com.codegym.socialbook.be.user.pack.dto.request.SearchForm;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateProviderDTO;
 import com.codegym.socialbook.be.user.pack.dto.request.UpdateUserDTO;
+import com.codegym.socialbook.be.user.pack.model.Orders;
 import com.codegym.socialbook.be.user.pack.model.Review;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.service.DTOService;
@@ -18,8 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Provider;
-import java.util.Set;
+import java.sql.Date;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -29,11 +30,12 @@ public class UserController {
     @Autowired
     IUserService userService;
 
-    @Autowired
-    IOrderService orderService;
 
     @Autowired
     DTOService dtoService;
+
+    @Autowired
+    IOrderService orderService;
 
 
 
@@ -44,7 +46,6 @@ public class UserController {
     public ResponseEntity<Page<Users>> find12lProvidersSortByStartDate(@PathVariable int page) {
         return new ResponseEntity(userService.find12ProvidersSortByStartDate(PageRequest.of(page, 12)), HttpStatus.OK);
     }
-
 
     // Trả về 1 đối tượng user
     @GetMapping("/{id}")
@@ -95,7 +96,7 @@ public class UserController {
     // 12 provider nhiều lượt date nhất
     @GetMapping("/most/date/provider/{page}")
     public ResponseEntity<Page<Users>> getMostDateProvider(@PathVariable int page) {
-        return new ResponseEntity(userService.find12ProvidersSortByCountOfDate(PageRequest.of(page, 6)), HttpStatus.OK);
+        return new ResponseEntity(userService.find12ProvidersSortByCountOfDate(PageRequest.of(page, 12)), HttpStatus.OK);
     }
 
     //show All
@@ -117,6 +118,18 @@ public class UserController {
         user.setStatus(3);
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/showAllOrders")
+    public ResponseEntity<List<Orders>> findAll(@PathVariable Long id) {
+        return new ResponseEntity(orderService.findAllByCustomerId(id), HttpStatus.OK);
+    }
+
+    @PostMapping("/createOrder")
+    public ResponseEntity<?> create(@RequestBody Orders order) {
+        order.setDateOfOrder(new Date(System.currentTimeMillis()));
+        order.setStatus(1);
+        return new ResponseEntity<>(orderService.save(order), HttpStatus.OK);
     }
 
     //Unban 1 user

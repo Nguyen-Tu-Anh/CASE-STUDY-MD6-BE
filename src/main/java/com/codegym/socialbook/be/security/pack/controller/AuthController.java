@@ -96,6 +96,8 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm) {
+        Users user = userService.findByUsername(signInForm.getUsername()).get();
+        if(user.getStatus()!=3){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInForm.getUsername(), signInForm.getPassword())
         );
@@ -103,7 +105,8 @@ public class AuthController {
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         Users users = userService.findByUsername(userPrinciple.getUsername()).get();
-        return ResponseEntity.ok(new JwtResponse(token, users));
+        return ResponseEntity.ok(new JwtResponse(token, users));}
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @PutMapping("/change-avatar")

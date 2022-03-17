@@ -1,5 +1,7 @@
 package com.codegym.socialbook.be.user.pack.service;
 
+import com.codegym.socialbook.be.security.pack.model.Role;
+import com.codegym.socialbook.be.security.pack.model.RoleName;
 import com.codegym.socialbook.be.user.pack.dto.request.SearchForm;
 import com.codegym.socialbook.be.user.pack.model.Users;
 import com.codegym.socialbook.be.user.pack.repository.IUserRepo;
@@ -44,13 +46,36 @@ public class UserService implements IUserService {
 
 
     @Override
-    public Page<Users> search(SearchForm searchForm,Pageable page) {
+    public Page<Users> search(SearchForm searchForm, Pageable page) {
         int maxAge = searchForm.getMaxAge();
         int minAge = searchForm.getMinAge();
         String name = searchForm.getName();
         String city = searchForm.getCity();
         String gender = searchForm.getGender();
-        return userRepo.searchProvider(maxAge,minAge,name,city,gender,page);
+        return userRepo.searchProvider(maxAge, minAge, name, city, gender, page);
+    }
+
+    @Override
+    public void removeAdmin(Long id) {
+        Users user = findById(id);
+        Set<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getId() == 3) {
+                roles.remove(role);
+                break;
+            }
+        }
+        user.setRoles(roles);
+        save(user);
+    }
+
+    @Override
+    public void makeAdmin(Long id) {
+        Users user = findById(id);
+        Set<Role> roles = user.getRoles();
+        roles.add(new Role(3L, RoleName.ADMIN));
+        user.setRoles(roles);
+        save(user);
     }
 
 //    @Override

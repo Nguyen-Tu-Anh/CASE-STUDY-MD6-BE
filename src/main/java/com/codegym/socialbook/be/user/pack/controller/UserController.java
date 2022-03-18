@@ -102,13 +102,13 @@ public class UserController {
     //show All
     @GetMapping("/page/{page}")
     public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
-        return new ResponseEntity(userService.showALl(PageRequest.of(page, 6)), HttpStatus.OK);
+        return new ResponseEntity(userService.showALl(PageRequest.of(page, 12)), HttpStatus.OK);
     }
 
     //tìm kiếm theo trường
     @PostMapping  ("/search/{page}")
     public ResponseEntity<Page<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
-        return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,6)), HttpStatus.OK);
+        return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,4)), HttpStatus.OK);
     }
 
     //Ban 1 user
@@ -166,6 +166,15 @@ public class UserController {
                user.setStatus(1);
            }
         }
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //Make vip
+    @GetMapping("/vip/{id}")
+    public ResponseEntity makeVip(@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.setVipDate(new Date(System.currentTimeMillis()));
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }

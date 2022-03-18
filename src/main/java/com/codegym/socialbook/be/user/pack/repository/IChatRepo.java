@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IChatRepo extends JpaRepository<Chat,Long> {
-    @Query(nativeQuery = true, value = "select * from chat where provider_id =:id")
-    Page<Chat> findAllComenUser(Pageable page, @Param("id") Long id);
+    @Query(nativeQuery = true, value = "select * from chat where provider_id =:id order by chat.id desc")
+    Page<Chat> findAllCommentByUser(Pageable page, @Param("id") Long id);
 
 
 }

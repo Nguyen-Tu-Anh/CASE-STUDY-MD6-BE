@@ -96,19 +96,19 @@ public class UserController {
     // 12 provider nhiều lượt date nhất
     @GetMapping("/most/date/provider/{page}")
     public ResponseEntity<Page<Users>> getMostDateProvider(@PathVariable int page) {
-        return new ResponseEntity(userService.find12ProvidersSortByCountOfDate(PageRequest.of(page, 12)), HttpStatus.OK);
+        return new ResponseEntity(userService.find12ProvidersSortByCountOfDate(PageRequest.of(page, 8)), HttpStatus.OK);
     }
 
     //show All
     @GetMapping("/page/{page}")
     public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
-        return new ResponseEntity(userService.showALl(PageRequest.of(page, 6)), HttpStatus.OK);
+        return new ResponseEntity(userService.showALl(PageRequest.of(page, 8)), HttpStatus.OK);
     }
 
     //tìm kiếm theo trường
     @PostMapping  ("/search/{page}")
     public ResponseEntity<Page<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
-        return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,6)), HttpStatus.OK);
+        return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,4)), HttpStatus.OK);
     }
 
     //Ban 1 user
@@ -128,7 +128,7 @@ public class UserController {
     @PostMapping("/createOrder")
     public ResponseEntity<?> create(@RequestBody Orders order) {
         order.setDateOfOrder(new Date(System.currentTimeMillis()));
-        order.setStatus(1);
+        order.setStatus("pending");
         return new ResponseEntity<>(orderService.save(order), HttpStatus.OK);
     }
 

@@ -12,11 +12,11 @@ import java.util.List;
 
 @Repository
 public interface IUserRepo extends JpaRepository<Users, Long> {
-    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 order by u.start_date desc")
+    @Query(nativeQuery = true, value = "select * from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 order by u.start_date desc")
 //    @Query(value = "select u from Users u where ")
     Page<Users> find12lProvidersSortByStartDate(Pageable page);
 
-    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 order by u.count_of_date desc")
+    @Query(nativeQuery = true, value = "select * from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 order by u.count_of_date desc")
     Page<Users> find12MostDatedProvider(Pageable page);
 
 //    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and u.name like %:name%")
@@ -31,6 +31,6 @@ public interface IUserRepo extends JpaRepository<Users, Long> {
 //    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and u.gender like %:gender%")
 //    List<Users> findAllByGenderContaining(@Param("gender") String gender);
 
-    @Query(nativeQuery = true, value = "select u.* from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and ( u.age <= :maxAge and u.age >=:minAge or u.name like %:name% or u.city like %:city% or u.gender like %:gender%) ")
+    @Query(nativeQuery = true, value = "select * from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 and ( u.age <= :maxAge and u.age >=:minAge or u.name like %:name% or u.city like %:city% or u.gender like %:gender%) ")
     Page<Users> searchProvider(@Param("maxAge") int maxAge, @Param("minAge") int minAge,@Param("name") String name,@Param("city") String city,@Param("gender") String gender,Pageable page);
 }

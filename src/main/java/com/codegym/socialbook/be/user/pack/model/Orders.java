@@ -16,16 +16,17 @@ public class Orders {
     private double hoursOfService;
 
     //1 : Chờ phản hồi
-    //2 : Đã nhận
-    //3 : Hoàn thành
-    private int status;
+//2 : Đã nhận
+//3 : Hoàn thành
+    private String status;
 
     //id của khách
     @ManyToOne
     private Users customer;
 
-    //id của người cung cấp dịch vụ
+//id của người cung cấp dịch vụ
 
     @ManyToOne
     private Users provider;
+
 }

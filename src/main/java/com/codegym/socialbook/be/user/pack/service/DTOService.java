@@ -55,6 +55,8 @@ public class DTOService {
         oldUser.setDateOfBirth(user.getDateOfBirth());
         oldUser.setGender(user.getGender());
         oldUser.setPhoneNumber(user.getPhoneNumber());
+        oldUser.setGender(user.getGender());
+        oldUser.setDateOfBirth(user.getDateOfBirth());
         oldUser.setAge(user.getAge());
         oldUser.setCity(user.getCity());
         oldUser.setNationality(user.getNationality());

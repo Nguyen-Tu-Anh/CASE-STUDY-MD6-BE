@@ -169,4 +169,13 @@ public class UserController {
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    //Make vip
+    @GetMapping("/vip/{id}")
+    public ResponseEntity makeVip(@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.setVipDate(new Date(System.currentTimeMillis()));
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

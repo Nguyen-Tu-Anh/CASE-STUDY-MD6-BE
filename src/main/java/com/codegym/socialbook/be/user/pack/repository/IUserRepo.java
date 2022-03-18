@@ -8,12 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface IUserRepo extends JpaRepository<Users, Long> {
     @Query(nativeQuery = true, value = "select * from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 order by u.start_date desc")
-//    @Query(value = "select u from Users u where ")
     Page<Users> find12lProvidersSortByStartDate(Pageable page);
 
     @Query(nativeQuery = true, value = "select * from users u join user_role ur on u.id = ur.user_id where ur.role_id=2 and u.status=1 order by u.count_of_date desc")

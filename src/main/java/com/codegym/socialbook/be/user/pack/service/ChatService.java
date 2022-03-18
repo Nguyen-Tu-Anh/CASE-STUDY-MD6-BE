@@ -1,7 +1,6 @@
 package com.codegym.socialbook.be.user.pack.service;
 
 import com.codegym.socialbook.be.user.pack.model.Chat;
-import com.codegym.socialbook.be.user.pack.model.Orders;
 import com.codegym.socialbook.be.user.pack.repository.IChatRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,7 @@ public class ChatService {
 
 
     public Page<Chat> findAllComenUser(Pageable page,Long id) {
-        return chatRepo.findAllComenUser(page,id);
+        return chatRepo.findAllCommentByUser(page,id);
     }
 
 

@@ -39,6 +39,13 @@ public class ReviewController {
         return new ResponseEntity(chat,HttpStatus.OK);
     }
 
+    //Xóa comment
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        chatService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 //    @DeleteMapping("/delete/{id}")
 //    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 //        usersService.delete(id);

@@ -52,7 +52,7 @@ public class Users {
 //    @Min(18)
     private int age;
     private String gender;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String city;
     private String nationality;
 
@@ -85,16 +85,8 @@ public class Users {
     @ManyToMany
     private Set<ServiceOfProvider> serviceOfProviders;
 
-    //Danh gia cua khach hang
-    @ManyToMany
-    private Set<Review> reviews;
-
     @ManyToMany
     private Set<Image> images;
-
-
-    public Users() {
-    }
 
     public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles) {
         this.id = id;
@@ -114,15 +106,18 @@ public class Users {
                     @Email String email,
                     String avatar,
                     @NotBlank
-                    @Size(min = 6,max = 100)String encode) {
+                    @Size(min = 6,max = 100)String encode,
+                    String phoneNumber
+    ) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.avatar = avatar;
+        this.phoneNumber = phoneNumber;
         this.password = encode;
     }
 
-    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, String dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Review> reviews, Set<Image> images) {
+    public Users(Long id, String name, String username, String email, String password, String avatar, Set<Role> roles, String phoneNumber, int age, String gender, Date dateOfBirth, String city, String nationality, int status, String description, String requirement, Date startDate, Date vipDate, String facebookUrl, Long countOfDate, String identify, double price, Set<ServiceOfProvider> serviceOfProviders, Set<Image> images) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -146,16 +141,11 @@ public class Users {
         this.identify = identify;
         this.price = price;
         this.serviceOfProviders = serviceOfProviders;
-        this.reviews = reviews;
         this.images = images;
     }
 
-    public Set<Image> getImages() {
-        return images;
-    }
+    public Users() {
 
-    public void setImages(Set<Image> images) {
-        this.images = images;
     }
 
     public Long getId() {
@@ -214,7 +204,6 @@ public class Users {
         this.roles = roles;
     }
 
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -239,11 +228,11 @@ public class Users {
         this.gender = gender;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -327,7 +316,6 @@ public class Users {
         this.identify = identify;
     }
 
-
     public double getPrice() {
         return price;
     }
@@ -344,11 +332,11 @@ public class Users {
         this.serviceOfProviders = serviceOfProviders;
     }
 
-    public Set<Review> getReviews() {
-        return reviews;
+    public Set<Image> getImages() {
+        return images;
     }
 
-    public void setReviews(Set<Review> reviews) {
-        this.reviews = reviews;
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 }

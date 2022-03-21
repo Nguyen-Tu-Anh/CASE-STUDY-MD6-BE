@@ -1,8 +1,17 @@
 package com.codegym.socialbook.be.user.pack.controller;
 
+import com.codegym.socialbook.be.security.pack.model.Role;
+import com.codegym.socialbook.be.security.pack.model.RoleName;
+import com.codegym.socialbook.be.user.pack.dto.request.SearchForm;
+import com.codegym.socialbook.be.user.pack.dto.request.UpdateProviderDTO;
+import com.codegym.socialbook.be.user.pack.dto.request.UpdateUserDTO;
+import com.codegym.socialbook.be.user.pack.model.Orders;
+import com.codegym.socialbook.be.user.pack.model.Review;
 import com.codegym.socialbook.be.user.pack.model.Users;
+import com.codegym.socialbook.be.user.pack.service.DTOService;
 import com.codegym.socialbook.be.user.pack.service.IOrderService;
 import com.codegym.socialbook.be.user.pack.service.IUserService;
+import com.codegym.socialbook.be.user.pack.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,45 +19,163 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/home")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     IUserService userService;
 
+
+    @Autowired
+    DTOService dtoService;
+
     @Autowired
     IOrderService orderService;
 
+
+
+
+
     //lấy ra list 12 người cung cấp dịch vụ sắp xếp theo ngày đăng kí từ mới tới cũ
     @GetMapping("/hot/providers/{page}")
-    public ResponseEntity<Page<Users>> find12lProvidersSortByStartDate(@PathVariable int page){
-        return new ResponseEntity(userService.find12ProvidersSortByStartDate(PageRequest.of(page,12)), HttpStatus.OK);
+    public ResponseEntity<Page<Users>> find12lProvidersSortByStartDate(@PathVariable int page) {
+        return new ResponseEntity(userService.find12ProvidersSortByStartDate(PageRequest.of(page, 12)), HttpStatus.OK);
     }
 
     // Trả về 1 đối tượng user
     @GetMapping("/{id}")
-    public ResponseEntity<Users> findById(@PathVariable Long id){
-        return new ResponseEntity(userService.findById(id),HttpStatus.OK);
+    public ResponseEntity<Users> findById(@PathVariable Long id) {
+        return new ResponseEntity(userService.findById(id), HttpStatus.OK);
     }
 
     //Chuyển trạng thái
     @PutMapping("/provider/change/{id}")
-    public ResponseEntity changeStatusToOffline(@PathVariable Long id){
+    public ResponseEntity changeStatusToOffline(@PathVariable Long id) {
         Users user = userService.findById(id);
         user.setStatus(2);
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //update user
-    @PutMapping()
-    public ResponseEntity updateUser(@RequestBody Users user){
+
+    //update profile cho provider
+    @PutMapping("/provider")
+    public ResponseEntity updateProvider(@RequestBody UpdateProviderDTO provider) {
+        Users oldProvider = userService.findById(provider.getId());
+        oldProvider = dtoService.transferDataFromProviderToOldProvider(oldProvider, provider);
+        userService.save(oldProvider);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //update profile cho user
+    @PutMapping("/user")
+    public ResponseEntity updateUser(@RequestBody UpdateUserDTO user) {
+        Users oldUser = userService.findById(user.getId());
+        oldUser = dtoService.transferDataFromUserToOldUser(oldUser, user);
+        userService.save(oldUser);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //chuyển trạng thái hoạt động
+    @GetMapping("/status/{id}")
+    public ResponseEntity<Integer> changeStatus(@PathVariable Long id) {
+        Users provider = userService.findById(id);
+        if (provider.getStatus() == 1) {
+            provider.setStatus(2);
+        } else {
+            provider.setStatus(1);
+        }
+        return new ResponseEntity(provider.getStatus(), HttpStatus.OK);
+    }
+
+    // 12 provider nhiều lượt date nhất
+    @GetMapping("/most/date/provider/{page}")
+    public ResponseEntity<Page<Users>> getMostDateProvider(@PathVariable int page) {
+        return new ResponseEntity(userService.find12ProvidersSortByCountOfDate(PageRequest.of(page, 12)), HttpStatus.OK);
+    }
+
+    //show All
+    @GetMapping("/page/{page}")
+    public ResponseEntity<Page<Users>> showAll(@PathVariable int page) {
+        return new ResponseEntity(userService.showALl(PageRequest.of(page, 12)), HttpStatus.OK);
+    }
+
+    //tìm kiếm theo trường
+    @PostMapping  ("/search/{page}")
+    public ResponseEntity<Page<Users>> findAllByFilters(@RequestBody SearchForm searchForm,@PathVariable int page){
+        return new ResponseEntity(userService.search(searchForm,PageRequest.of(page,4)), HttpStatus.OK);
+    }
+
+    //Ban 1 user
+    @GetMapping("/ban/{id}")
+    public ResponseEntity banUser(@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.setStatus(3);
         userService.save(user);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //Tìm kiếm theo tên
+    @GetMapping("/{id}/showAllOrders")
+    public ResponseEntity<List<Orders>> findAll(@PathVariable Long id) {
+        return new ResponseEntity(orderService.findAllByCustomerId(id), HttpStatus.OK);
+    }
 
+    @PostMapping("/createOrder")
+    public ResponseEntity<?> create(@RequestBody Orders order) {
+        order.setDateOfOrder(new Date(System.currentTimeMillis()));
+        order.setStatus(1);
+        return new ResponseEntity<>(orderService.save(order), HttpStatus.OK);
+    }
+
+    //Unban 1 user
+    @GetMapping("/unban/{id}")
+    public ResponseEntity unBanUser(@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.setStatus(1);
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //Cho lên admin
+    @GetMapping("/make/admin/{id}")
+    public ResponseEntity makeAdmin(@PathVariable Long id){
+        userService.makeAdmin(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //Xóa khỏi admin
+    @GetMapping("/remove/admin/{id}")
+    public ResponseEntity removeAdmin(@PathVariable Long id){
+        userService.removeAdmin(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // Chuyển trạng thái sang online
+    @GetMapping("/online/{id}")
+    public ResponseEntity changeStatusToOnline(@PathVariable Long id){
+        Users user = userService.findById(id);
+        if(user.getStatus()==1){
+            user.setStatus(2);
+        } else {
+           if(user.getStatus()==2){
+               user.setStatus(1);
+           }
+        }
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //Make vip
+    @GetMapping("/vip/{id}")
+    public ResponseEntity makeVip(@PathVariable Long id){
+        Users user = userService.findById(id);
+        user.setVipDate(new Date(System.currentTimeMillis()));
+        userService.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
